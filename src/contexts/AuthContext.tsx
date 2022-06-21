@@ -12,6 +12,7 @@ export interface AuthContextData {
     password: string,
     passwordConfirmation: string
   ) => Promise<void>;
+  rememberMe?: boolean
 }
 
 export const AuthContext = createContext<AuthContextData>(

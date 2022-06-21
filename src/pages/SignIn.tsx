@@ -1,6 +1,13 @@
-import { Button, Checkbox, Label, TextInput, DarkThemeToggle } from "flowbite-react";
+import {
+  Button,
+  Checkbox,
+  Label,
+  TextInput,
+  DarkThemeToggle,
+} from "flowbite-react";
 import { useFormik } from "formik";
 import React from "react";
+import { Link } from "react-router-dom";
 import * as Yup from "yup";
 import { useAuth } from "../contexts/AuthContext";
 
@@ -37,59 +44,71 @@ const SignIn: React.FC = () => {
   });
 
   return (
-    <div className="container mt-10 mx-auto">
-      <h1 className="text-xl">Sign in</h1>
-      <div className="flex justify-center">
-        <DarkThemeToggle/>
+    <div className="dark:bg-gray-800">
+      <div className="container p-12">
+        <h1 className="text-xl dark:text-white">Sign in</h1>
+        <div className="flex justify-center">
+          <DarkThemeToggle />
+        </div>
+        <form className="flex flex-col gap-4">
+          <div>
+            <div className="mb-2 block">
+              <Label htmlFor="email" value="Your email" />
+            </div>
+            <TextInput
+              id="email"
+              type="email"
+              name="email"
+              onChange={formik.handleChange}
+              placeholder="name@flowbite.com"
+              required={true}
+              color={
+                formik.touched.email && formik.errors.email ? "red" : "base"
+              }
+              helperText={formik.touched.email && formik.errors.email}
+            />
+          </div>
+          <div>
+            <div className="mb-2 block">
+              <Label htmlFor="password" value="Your password" />
+            </div>
+            <TextInput
+              id="password"
+              name="password"
+              type="password"
+              onChange={formik.handleChange}
+              required={true}
+              color={
+                formik.touched.password && formik.errors.password
+                  ? "red"
+                  : "base"
+              }
+              helperText={formik.touched.password && formik.errors.password}
+            />
+          </div>
+          <div className="flex items-center gap-2">
+            <Checkbox id="remember" />
+            <Label htmlFor="remember">Remember me</Label>
+          </div>
+          <Button
+            type="button"
+            disabled={formik.submitCount >= 0 ? !formik.isValid : true}
+            onClick={() => {
+              formik.handleSubmit();
+            }}
+          >
+            Login
+          </Button>
+          <Link
+            className="text-right text-blue-700 hover:underline"
+            to="/sign-up"
+          >
+            Don't have an account? Create one
+          </Link>
+        </form>
       </div>
-      <form className="flex flex-col gap-4">
-        <div>
-          <div className="mb-2 block">
-            <Label htmlFor="email" value="Your email" />
-          </div>
-          <TextInput
-            id="email"
-            type="email"
-            name="email"
-            onChange={formik.handleChange}
-            placeholder="name@flowbite.com"
-            required={true}
-            color={formik.touched.email && formik.errors.email ? "red" : "base"}
-            helperText={formik.touched.email && formik.errors.email}
-          />
-        </div>
-        <div>
-          <div className="mb-2 block">
-            <Label htmlFor="password" value="Your password" />
-          </div>
-          <TextInput
-            id="password"
-            name="password"
-            type="password"
-            onChange={formik.handleChange}
-            required={true}
-            color={
-              formik.touched.password && formik.errors.password ? "red" : "base"
-            }
-            helperText={formik.touched.password && formik.errors.password}
-          />
-        </div>
-        <div className="flex items-center gap-2">
-          <Checkbox id="remember" />
-          <Label htmlFor="remember">Remember me</Label>
-        </div>
-        <Button
-          type="button"
-          disabled={formik.submitCount >= 0 ? !formik.isValid : true}
-          onClick={() => {
-            formik.handleSubmit();
-          }}
-        >
-          Submit
-        </Button>
-      </form>
     </div>
-  )
-}
+  );
+};
 
 export default SignIn;

@@ -2,14 +2,14 @@ import { AuthProvider } from "./contexts/AuthContext";
 import Routes from "./routes";
 import "./styles/global.css";
 
-function App() {
+const App: React.FC = () => {
   return (
     <div>
-      <AuthProvider>
-        <Routes />;
-      </AuthProvider>
+        <AuthProvider>
+          <Routes/>;
+        </AuthProvider>
     </div>
   );
-}
+};
 
 export default App;
