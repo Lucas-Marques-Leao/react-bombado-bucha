@@ -9,30 +9,22 @@ export default class TestsController {
 
         const test = await Test.create(body);
 
-        response.status(201)
+        return response.created(test)
 
-        return {
-            message: 'Test created sucessfully',
-            data: test,
-        }
     }
 
     public async index() {
 
         const test = await Test.query()
         
-        return {
-            data: test,
-
-        }
+        return test
     }
 
     public async show ({params}: HttpContextContract) {
         const test = await Test.findOrFail(params.id);
 
-        return {
-            data: test,
-        }
+        return test
+        
 
     }
 
@@ -41,10 +33,7 @@ export default class TestsController {
 
         await test.delete()
 
-        return {
-            message: "Test deleted sucessfully",
-            data: test,
-        }
+        return true
 
     }
 
@@ -59,10 +48,7 @@ export default class TestsController {
 
         await test.save()
 
-        return {
-            message: 'Test updated sucessfully',
-            data: test,
-        }
+        return test;
 
     }
 }

@@ -26,7 +26,7 @@ interface AuthProviderProps {
 const MySwal = withReactContent(Swal);
 
 export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
-  const [signed, setSigned] = useState(false);
+  const [signed, setSigned] = useState(true);
 
   const login = useCallback(async (email: string, password: string) => {
     try {

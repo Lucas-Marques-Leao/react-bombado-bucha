@@ -6,7 +6,7 @@ const App: React.FC = () => {
   return (
     <div>
         <AuthProvider>
-          <Routes/>;
+          <Routes/>
         </AuthProvider>
     </div>
   );
