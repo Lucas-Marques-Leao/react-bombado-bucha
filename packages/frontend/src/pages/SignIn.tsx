@@ -90,6 +90,12 @@ const SignIn: React.FC = () => {
             <Checkbox id="remember" />
             <Label htmlFor="remember">Remember me</Label>
           </div>
+          <Link
+            className="text-right text-blue-700 hover:underline"
+            to="/sign-up"
+          >
+            Don't have an account? Create one
+          </Link>
           <Button
             type="button"
             disabled={formik.submitCount >= 0 ? !formik.isValid : true}
@@ -99,12 +105,7 @@ const SignIn: React.FC = () => {
           >
             Login
           </Button>
-          <Link
-            className="text-right text-blue-700 hover:underline"
-            to="/sign-up"
-          >
-            Don't have an account? Create one
-          </Link>
+          
         </form>
       </div>
     </div>

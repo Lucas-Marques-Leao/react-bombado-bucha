@@ -1,5 +1,5 @@
 import { AxiosResponse } from "axios";
-import { DarkThemeToggle } from "flowbite-react";
+import { DarkThemeToggle, Navbar } from "flowbite-react";
 import { useEffect, useState } from "react";
 import { ITest } from "../../../shared/interfaces/ITest";
 import api from "../services/api";
@@ -27,6 +27,7 @@ const Home: React.FC = () => {
       <div id="darkmode" className="float-right">
         <DarkThemeToggle />
       </div>
+      <Navbar/>
       <h1>Consumindo:</h1>
       {list.length > 0 ? (
         <ul>
@@ -41,6 +42,8 @@ const Home: React.FC = () => {
       ) : (
         <p>Não foi possivel carregar a lista</p>
       )}
+
+      <h2></h2>
     </div>
   );
 };

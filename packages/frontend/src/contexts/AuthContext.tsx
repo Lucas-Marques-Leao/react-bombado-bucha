@@ -12,7 +12,7 @@ export interface AuthContextData {
     password: string,
     passwordConfirmation: string
   ) => Promise<void>;
-  rememberMe?: boolean
+  
 }
 
 export const AuthContext = createContext<AuthContextData>(
@@ -26,7 +26,7 @@ interface AuthProviderProps {
 const MySwal = withReactContent(Swal);
 
 export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
-  const [signed, setSigned] = useState(true);
+  const [signed, setSigned] = useState(false);
 
   const login = useCallback(async (email: string, password: string) => {
     try {
@@ -58,6 +58,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
           password,
           passwordConfirmation,
         });
+        
       } catch (error) {
         MySwal.fire(
           "Erro",

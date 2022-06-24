@@ -6,7 +6,7 @@ import {
   TextInput,
 } from "flowbite-react";
 import { useFormik } from "formik";
-import React from "react";
+import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
 import * as Yup from "yup";
 import { useAuth } from "../contexts/AuthContext";
@@ -40,6 +40,8 @@ const signUpInitialValues: SignUpData = {
 
 const SignUp: React.FC = () => {
   const { register } = useAuth();
+  let navigate = useNavigate();
+  
 
   const handleSubmit = async (values: SignUpData) => {
     await register(
@@ -47,7 +49,9 @@ const SignUp: React.FC = () => {
       values.email,
       values.password,
       values.passwordConfirmation
-    );
+    )
+    navigate('/sign-in');
+    
   };
 
   const formik = useFormik({
@@ -143,6 +147,12 @@ const SignUp: React.FC = () => {
             <Checkbox id="remember" />
             <Label htmlFor="remember">Remember me</Label>
           </div>
+          <Link
+            className="text-right text-blue-700 hover:underline"
+            to="/sign-in"
+          >
+            Already have an account? Click here
+          </Link>
           <Button
             type="button"
             disabled={formik.submitCount >= 0 ? !formik.isValid : true}
@@ -152,12 +162,7 @@ const SignUp: React.FC = () => {
           >
             Register
           </Button>
-          <Link
-            className="text-right text-blue-700 hover:underline"
-            to="/sign-in"
-          >
-            Already have an account? Click here
-          </Link>
+          
         </form>
       </div>
     </div>
