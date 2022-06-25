@@ -23,7 +23,6 @@ export default class UsersController {
 
         return user
         
-
     }
 
     public async destroy({params}: HttpContextContract) {
