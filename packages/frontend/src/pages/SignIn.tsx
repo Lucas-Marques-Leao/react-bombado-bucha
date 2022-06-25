@@ -46,10 +46,11 @@ const SignIn: React.FC = () => {
   return (
     <div className="dark:bg-gray-800">
       <div className="container p-12">
-        <h1 className="text-xl dark:text-white">Sign in</h1>
         <div className="flex justify-center">
           <DarkThemeToggle />
         </div>
+        <h1 className="text-xl dark:text-white pb-6">Sign in</h1>
+
         <form className="flex flex-col gap-4">
           <div>
             <div className="mb-2 block">
@@ -105,7 +106,6 @@ const SignIn: React.FC = () => {
           >
             Login
           </Button>
-          
         </form>
       </div>
     </div>

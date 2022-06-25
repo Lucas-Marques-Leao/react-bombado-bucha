@@ -26,6 +26,10 @@ Route.group(() => {
   Route.get('/', async () => {
     return "Hello World"
   })
+
+  Route.get('/google/callback', async ({ ally }) => {
+    return ally.use('google').redirect()
+  })
   Route.resource('/users', 'UsersController').apiOnly()
   Route.resource('/tests', 'TestsController').apiOnly()
   

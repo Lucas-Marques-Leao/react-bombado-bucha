@@ -1,4 +1,3 @@
-import { AxiosResponse } from "axios";
 import { DarkThemeToggle, Navbar } from "flowbite-react";
 import { useEffect, useState } from "react";
 import { ITest } from "../../../shared/interfaces/ITest";

@@ -9,7 +9,7 @@ export default class extends BaseSchema {
       table.string('name')
       table.string('password')
       table.string('password_confirmation')
-      table.string('email')
+      table.string('email').unique()
 
       /**
        * Uses timestamptz for PostgreSQL and DATETIME2 for MSSQL

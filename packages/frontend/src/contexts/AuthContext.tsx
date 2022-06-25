@@ -58,11 +58,16 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
           password,
           passwordConfirmation,
         });
+        MySwal.fire(
+          "Usuário Registrado com Sucesso",
+          `Seja bem-vindo ${name}`,
+          "success"
+        )
         
       } catch (error) {
         MySwal.fire(
           "Erro",
-          "Erro ao criar o usuário verifique os dados",
+          `Erro ao criar o usuário verifique os dados: ${error.message}`,
           "error"
         );
       }

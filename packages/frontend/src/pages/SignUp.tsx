@@ -41,17 +41,19 @@ const signUpInitialValues: SignUpData = {
 const SignUp: React.FC = () => {
   const { register } = useAuth();
   let navigate = useNavigate();
-  
 
   const handleSubmit = async (values: SignUpData) => {
+    
     await register(
       values.name,
       values.email,
       values.password,
       values.passwordConfirmation
-    )
-    navigate('/sign-in');
-    
+    ).catch(err => console.log(err));
+
+    setTimeout(() => {
+      navigate("/sign-in");
+    }, 3000);
   };
 
   const formik = useFormik({
@@ -63,10 +65,11 @@ const SignUp: React.FC = () => {
   return (
     <div className="dark:bg-gray-800">
       <div className="container p-12">
-        <h1 className="text-xl dark:text-white">Sign up</h1>
         <div className="flex justify-center">
           <DarkThemeToggle />
         </div>
+        <h1 className="text-xl dark:text-white pb-6">Sign up</h1>
+
         <form className="flex flex-col gap-4">
           <div>
             <div className="mb-2 block">
@@ -162,7 +165,6 @@ const SignUp: React.FC = () => {
           >
             Register
           </Button>
-          
         </form>
       </div>
     </div>
