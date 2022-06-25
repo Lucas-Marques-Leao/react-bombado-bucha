@@ -39,10 +39,10 @@ export default class UsersController {
 
         const user = await User.findOrFail(params.id);
 
-        user.name = body.name;
+        user.email = body.email;
         user.password = body.password;
-        user.passwordConfirmation = body.passwordConfirmation
-        user.email = body.email
+        user.rememberMeToken = body.rememberMeToken;
+
 
         await user.save()
 
