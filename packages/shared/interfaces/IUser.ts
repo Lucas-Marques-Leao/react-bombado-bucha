@@ -1,9 +1,18 @@
-export interface IUser {
-    id: number;
-    name: string;
-    email: string;
-    password: string;
-    passwordConfirmation: string;
-    createdAt: Date;
-    updatedAt: Date;
+import { DateTime } from "luxon";
+
+export default interface IUser {
+
+  id: number;
+
+  email: string;
+
+  name: string;
+
+  photoUrl?: string;
+
+  rememberMeToken?: string;
+
+  createdAt: DateTime;
+
+  updatedAt: DateTime;
 }

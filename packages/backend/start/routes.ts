@@ -18,22 +18,19 @@
 |
 */
 
-
+import './routes/google'
 import Route from '@ioc:Adonis/Core/Route'
-import User from '../app/Models/User'
 
 Route.group(() => {
 
   Route.get('/', async () => {
-    return "Hello World"
+    return {
+      Hello: "World"
+    }
   })
 
-  Route.get('/google/redirect', async ({ ally }) => {
-    return ally.use('google').redirect()
-  })
-  
   Route.resource('/users', 'UsersController').apiOnly()
 
   Route.resource('/tests', 'TestsController').apiOnly()
-  
+
 })

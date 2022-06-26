@@ -1,16 +1,29 @@
 import { DateTime } from 'luxon'
 import Hash from '@ioc:Adonis/Core/Hash'
 import { column, beforeSave, BaseModel } from '@ioc:Adonis/Lucid/Orm'
+import  IUser from '@react-bombado-bucha/shared/interfaces/IUser';
 
-export default class User extends BaseModel {
+export default class User extends BaseModel implements IUser {
   @column({ isPrimary: true })
   public id: number
 
   @column()
   public email: string
 
+  @column()
+  public name: string
+
+  @column()
+  public photoUrl?: string
+
+  @column()
+  public provider: string
+
+  @column()
+  public providerId?: string
+
   @column({ serializeAs: null })
-  public password: string
+  public password?: string
 
   @column()
   public rememberMeToken?: string
@@ -22,9 +35,11 @@ export default class User extends BaseModel {
   public updatedAt: DateTime
 
   @beforeSave()
-  public static async hashPassword (user: User) {
+  public static async hashPassword(user: User) {
     if (user.$dirty.password) {
-      user.password = await Hash.make(user.password)
+      if (user.password) {
+        user.password = await Hash.make(user.password)
+      }
     }
   }
 }
