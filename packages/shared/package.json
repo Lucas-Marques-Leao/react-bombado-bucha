@@ -5,6 +5,10 @@
   "license": "MIT",
   "private": true,
   "dependencies": {
+    "axios": "^0.27.2",
     "luxon": "^2.4.0"
+  },
+  "devDependencies": {
+    "@types/luxon": "^2.3.2"
   }
 }
