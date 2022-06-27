@@ -8,7 +8,6 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "axios": "^0.27.2",
     "flowbite": "^1.4.7",
     "flowbite-react": "^0.0.26",
     "formik": "^2.2.9",

@@ -1,7 +1,7 @@
 import { createContext, useCallback, useContext, useState } from "react";
 import Swal from "sweetalert2";
 import withReactContent from "sweetalert2-react-content";
-import api from "../services/api";
+import api from "@react-bombado-bucha/shared/api"
 
 export interface AuthContextData {
   signed: boolean;

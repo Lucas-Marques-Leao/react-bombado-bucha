@@ -1,7 +1,7 @@
 import { DarkThemeToggle, Navbar } from "flowbite-react";
 import { useEffect, useState } from "react";
 import { ITest } from "../../../shared/interfaces/ITest";
-import api from "../services/api";
+import api from "@react-bombado-bucha/shared/api";
 
 const Home: React.FC = () => {
   const [list, setList] = useState<ITest[]>([]);
