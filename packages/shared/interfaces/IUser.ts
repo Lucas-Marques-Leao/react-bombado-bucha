@@ -1,4 +1,4 @@
-import { DateTime } from '@react-bombado-bucha/backend/node_modules/@types/luxon/index';
+import { DateTime } from 'luxon';
 
 export default interface IUser {
   id: number;
