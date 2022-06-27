@@ -26,10 +26,6 @@ Route.group(() => {
     return { Hello: 'World' }
   })
 
-  Route.get('/google/redirect', async ({ ally }) => {
-    return ally.use('google').redirect()
-  })
-
   Route.resource('/users', 'UsersController')
 
   Route.get('/users/email/:email', 'UsersController.email')
