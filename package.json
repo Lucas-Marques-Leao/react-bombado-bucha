@@ -3,7 +3,19 @@
   "private": true,
   "version": "0.0.0",
   "workspaces": {
-    "packages": ["packages/*"],
-    "nohoist": ["**/@adonisjs", "**/@adonisjs/**, axios"]
+    "nohoist": [
+      "**"
+    ],
+    "packages": [
+      "packages/*"
+    ]
+  },
+  "devDependencies": {
+    "lerna": "^5.1.6"
+  },
+  "scripts": {
+    "backend": "cd packages/backend && yarn",
+    "frontend": "cd packages/frontend && yarn",
+    "shared": "cd packages/frontend && shared"
   }
 }

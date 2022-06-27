@@ -1,52 +1,39 @@
 import type { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
+import StoreValidator from 'App/Validators/user/StoreValidator';
 import User from '../../Models/User';
 
 export default class UsersController {
-    public async store({request, response}: HttpContextContract) {
-        const body = request.body();
+    public async store({ request, response }: HttpContextContract) {
+        const data = await request.validate(StoreValidator);
 
-        const user = await User.create(body);
+        try {
+            const user = await User.create(data);
+            return user
+        } catch (err) {
+            return response.internalServerError('Error creating user')
+        }
 
-        return response.created(user)
+
 
     }
+    
+    public async email({ params, response }: HttpContextContract) {
+        const user = await User.findBy('email', params.email);
 
-    public async index() {
-
-        const user = await User.query()
-        
+        if (!user) {
+            return response.notFound('User not found')
+        }
         return user
-    }
-
-    public async show ({params}: HttpContextContract) {
-        const user = await User.findOrFail(params.id);
-
-        return user
-        
-    }
-
-    public async destroy({params}: HttpContextContract) {
-        const user = await User.findOrFail(params.id)
-
-        await user.delete()
-
-        return true
 
     }
 
-    public async update({params, request}: HttpContextContract) {
-        const body = request.body();
+    public async index({ }: HttpContextContract) { }
 
-        const user = await User.findOrFail(params.id);
+    public async show({ }: HttpContextContract) { }
 
-        user.email = body.email;
-        user.password = body.password;
-        user.rememberMeToken = body.rememberMeToken;
+    public async destroy({ }: HttpContextContract) { }
+
+    public async update({ }: HttpContextContract) { }
 
 
-        await user.save()
-
-        return user;
-
-    }
 }

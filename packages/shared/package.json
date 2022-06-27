@@ -3,6 +3,8 @@
   "version": "1.0.0",
   "main": "index.js",
   "license": "MIT",
-  "private": true
-
+  "private": true,
+  "dependencies": {
+    "luxon": "^2.4.0"
+  }
 }
