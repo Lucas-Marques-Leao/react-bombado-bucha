@@ -43,17 +43,17 @@ const SignUp: React.FC = () => {
   let navigate = useNavigate();
 
   const handleSubmit = async (values: SignUpData) => {
-    
-    await register(
-      values.name,
-      values.email,
-      values.password,
-      values.passwordConfirmation
-    ).catch(err => console.log(err));
-
-    setTimeout(() => {
-      navigate("/sign-in");
-    }, 3000);
+      await register(
+        values.name,
+        values.email,
+        values.password,
+        values.passwordConfirmation
+      );
+      
+      setTimeout(() => {
+        navigate("/sign-in");
+      }, 3000);
+  
   };
 
   const formik = useFormik({

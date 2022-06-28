@@ -1,6 +1,6 @@
 import { DateTime } from 'luxon'
 import Hash from '@ioc:Adonis/Core/Hash'
-import { column, beforeSave, BaseModel } from '@ioc:Adonis/Lucid/Orm'
+import { column, beforeSave, BaseModel, computed } from '@ioc:Adonis/Lucid/Orm'
 import IUser from '@react-bombado-bucha/shared/interfaces/IUser'
 
 export default class User extends BaseModel implements IUser {
@@ -18,6 +18,11 @@ export default class User extends BaseModel implements IUser {
 
   @column()
   public provider: string
+
+  @computed()
+  public get hasPassword() {
+    return !!this.password
+  }
 
   @column()
   public providerId?: string

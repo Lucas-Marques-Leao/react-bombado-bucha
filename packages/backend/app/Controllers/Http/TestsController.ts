@@ -1,54 +1,46 @@
 import type { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
 
-import Test from "../../Models/Test"
+import Test from '../../Models/Test'
 
 export default class TestsController {
+  public async store({ request, response }: HttpContextContract) {
+    const body = request.body()
 
-    public async store({request, response}: HttpContextContract) {
-        const body = request.body();
+    const test = await Test.create(body)
 
-        const test = await Test.create(body);
+    return response.created(test)
+  }
 
-        return response.created(test)
+  public async index() {
+    const test = await Test.query()
+    return test
+  }
 
-    }
+  public async show({ params }: HttpContextContract) {
+    const test = await Test.findOrFail(params.id)
 
-    public async index() {
+    return test
+  }
 
-        const test = await Test.query()
-        
-        return test
-    }
+  public async destroy({ params }: HttpContextContract) {
+    const test = await Test.findOrFail(params.id)
 
-    public async show ({params}: HttpContextContract) {
-        const test = await Test.findOrFail(params.id);
+    await test.delete()
 
-        return test
-        
+    return true
+  }
 
-    }
+  public async update({ params, request }: HttpContextContract) {
+    const body = request.body()
 
-    public async destroy({params}: HttpContextContract) {
-        const test = await Test.findOrFail(params.id)
+    const test = await Test.findOrFail(params.id)
 
-        await test.delete()
+    test.name = body.name
+    test.password = body.password
+    test.email = body.email
 
-        return true
+    await test.save()
 
-    }
-
-    public async update({params, request}: HttpContextContract) {
-        const body = request.body();
-
-        const test = await Test.findOrFail(params.id);
-
-        test.name = body.name;
-        test.password = body.password;
-        test.email = body.email
-
-        await test.save()
-
-        return test;
-
-    }
+    return test
+  }
 }

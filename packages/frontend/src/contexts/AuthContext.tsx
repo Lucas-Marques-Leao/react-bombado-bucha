@@ -10,7 +10,7 @@ export interface AuthContextData {
     name: string,
     email: string,
     password: string,
-    passwordConfirmation: string
+    passwordConfirmation: string,
   ) => Promise<void>;
   
 }
@@ -56,7 +56,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
           name,
           email,
           password,
-          passwordConfirmation,
+          passwordConfirmation
         });
         MySwal.fire(
           "Usuário Registrado com Sucesso",

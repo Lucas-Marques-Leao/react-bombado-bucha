@@ -26,7 +26,7 @@ Route.group(() => {
     return { Hello: 'World' }
   })
 
-  Route.resource('/users', 'UsersController')
+  Route.resource('/users', 'UsersController').middleware({})
 
   Route.get('/users/email/:email', 'UsersController.email')
 
