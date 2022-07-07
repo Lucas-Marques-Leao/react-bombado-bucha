@@ -1,3 +1,4 @@
+import api from "@react-bombado-bucha/shared/api";
 import {
   Button,
   Checkbox,
@@ -10,6 +11,7 @@ import * as React from "react";
 import { Link, useNavigate } from "react-router-dom";
 import * as Yup from "yup";
 import { useAuth } from "../contexts/AuthContext";
+import MySwal from "../services/swal";
 
 const signInSchema = Yup.object().shape({
   email: Yup.string()
@@ -33,6 +35,16 @@ const signInInitialValues: SignInData = {
 const SignIn: React.FC = () => {
   const { login } = useAuth();
   let navigate = useNavigate();
+
+  // const handleGoogleRedirect = async () => {
+  //   try {
+  //     const { data } = await api.post('/google/redirect')
+
+  //     MySwal.fire('Deu Bom', 'KKKKKKKKK', 'success')
+  //   } catch (err) {
+  //     MySwal.fire('Deu Merda', 'OLHa A meRDA !!!!!', 'error')
+  //   }
+  // }
 
   const handleSubmit = async (values: SignInData) => {
     try {
@@ -114,6 +126,9 @@ const SignIn: React.FC = () => {
             }}
           >
             Login
+          </Button>
+          <Button href="http://localhost:3333/google/redirect">
+            Loga ai caralho/
           </Button>
         </form>
       </div>
