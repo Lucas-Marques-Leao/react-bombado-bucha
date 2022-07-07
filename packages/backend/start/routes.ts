@@ -32,7 +32,7 @@ Route.group(() => {
 
   Route.resource('/tests', 'TestsController').apiOnly()
 
-  Route.post('/login', 'AuthController')
+  Route.post('/login', 'AuthController.store')
 
   Route.post('/logout', 'AuthController.destroy')
 })

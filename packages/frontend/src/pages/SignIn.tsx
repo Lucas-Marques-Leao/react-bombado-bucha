@@ -6,8 +6,8 @@ import {
   DarkThemeToggle,
 } from "flowbite-react";
 import { useFormik } from "formik";
-import React from "react";
-import { Link } from "react-router-dom";
+import * as React from "react";
+import { Link, useNavigate } from "react-router-dom";
 import * as Yup from "yup";
 import { useAuth } from "../contexts/AuthContext";
 
@@ -32,9 +32,18 @@ const signInInitialValues: SignInData = {
 
 const SignIn: React.FC = () => {
   const { login } = useAuth();
+  let navigate = useNavigate();
 
   const handleSubmit = async (values: SignInData) => {
-    await login(values.email, values.password);
+    try {
+      await login(values.email, values.password);
+
+      setTimeout(() => {
+        navigate("/home");
+      }, 3000);
+    } catch (err) {
+      console.log(err);
+    }
   };
 
   const formik = useFormik({

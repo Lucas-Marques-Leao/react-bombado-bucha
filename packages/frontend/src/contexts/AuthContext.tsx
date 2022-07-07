@@ -1,7 +1,13 @@
-import { createContext, useCallback, useContext, useState } from "react";
-import Swal from "sweetalert2";
-import withReactContent from "sweetalert2-react-content";
-import api from "@react-bombado-bucha/shared/api"
+import {
+  createContext,
+  useCallback,
+  useContext,
+  useEffect,
+  useMemo,
+  useState,
+} from "react";
+import MySwal from "../services/swal";
+import api from "@react-bombado-bucha/shared/api";
 
 export interface AuthContextData {
   signed: boolean;
@@ -10,9 +16,9 @@ export interface AuthContextData {
     name: string,
     email: string,
     password: string,
-    passwordConfirmation: string,
+    passwordConfirmation: string
   ) => Promise<void>;
-  
+  logout: () => Promise<void>;
 }
 
 export const AuthContext = createContext<AuthContextData>(
@@ -23,18 +29,50 @@ interface AuthProviderProps {
   children: React.ReactNode;
 }
 
-const MySwal = withReactContent(Swal);
-
 export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
-  const [signed, setSigned] = useState(false);
+  const [user, setUser] = useState();
+  const [token, setToken] = useState<string>();
+  const signed = useMemo(() => {
+    return !!user;
+  }, [user]);
+
+  const handleRehydrateUserData = () => {
+    const user = localStorage.getItem("auth:user");
+    const token = localStorage.getItem("auth:token");
+
+    if (user) {
+      setUser(JSON.parse(user));
+    }
+
+    if (token) {
+      setToken(token);
+    }
+  };
+
+  useEffect(() => {
+    handleRehydrateUserData();
+  }, []);
+
+  useEffect(() => {
+    if (token) {
+      api.defaults.headers.common.Authorization = token!;
+    }
+  }, [token]);
 
   const login = useCallback(async (email: string, password: string) => {
     try {
-      await api.post("/login", {
+      const { data } = await api.post("/login", {
         email,
         password,
       });
-      setSigned(true);
+
+      localStorage.setItem("auth:user", JSON.stringify(data.user));
+      localStorage.setItem("auth:token", data.token.token);
+
+      setUser(data.user);
+      setToken(data.token.token);
+
+      MySwal.fire("Logado", "Seja Bem-vindo(a)", "success");
     } catch (error) {
       MySwal.fire(
         "Erro",
@@ -56,14 +94,13 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
           name,
           email,
           password,
-          passwordConfirmation
+          password_confirmation: passwordConfirmation,
         });
         MySwal.fire(
           "Usuário Registrado com Sucesso",
           `Seja bem-vindo ${name}`,
           "success"
-        )
-        
+        );
       } catch (error) {
         MySwal.fire(
           "Erro",
@@ -75,8 +112,19 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
     []
   );
 
+  const logout = useCallback(async () => {
+    try {
+      await api.post("/logout");
+      localStorage.removeItem("auth:user");
+      localStorage.removeItem("auth:token");
+    } catch (err) {
+      localStorage.removeItem("auth:user");
+      localStorage.removeItem("auth:token");
+    }
+  }, []);
+
   return (
-    <AuthContext.Provider value={{ signed, login, register }}>
+    <AuthContext.Provider value={{ signed, login, register, logout }}>
       {children}
     </AuthContext.Provider>
   );

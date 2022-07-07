@@ -4,13 +4,9 @@ import StoreValidator from 'App/Validators/user/StoreValidator'
 
 export default class UsersController {
   public async store({ request, response }: HttpContextContract) {
-    console.log('pica')
     const data = await request.validate(StoreValidator)
-    console.log('penis')
     try {
-      console.log('pica')
       const user = await User.create(data)
-      console.log('penis')
       return user
     } catch (err) {
       return response.internalServerError('Error creating user')
@@ -26,7 +22,9 @@ export default class UsersController {
     return user
   }
 
-  public async index({}: HttpContextContract) {}
+  public async index({}: HttpContextContract) {
+    return User.query()
+  }
 
   public async show({}: HttpContextContract) {}
 

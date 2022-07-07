@@ -5,9 +5,9 @@ import "./styles/global.css";
 const App: React.FC = () => {
   return (
     <div>
-        <AuthProvider>
-          <Routes/>
-        </AuthProvider>
+      <AuthProvider>
+        <Routes />
+      </AuthProvider>
     </div>
   );
 };
