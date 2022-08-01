@@ -1,3 +1,4 @@
+import React from "react";
 import { Flowbite } from "flowbite-react";
 import { BrowserRouter } from "react-router-dom";
 import AppRoutes from "./AppRoutes";

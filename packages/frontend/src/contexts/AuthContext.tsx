@@ -1,3 +1,6 @@
+import api from "@react-bombado-bucha/shared/api";
+import IUser from "@react-bombado-bucha/shared/interfaces/IUser";
+import * as React from "react";
 import {
   createContext,
   useCallback,
@@ -7,10 +10,10 @@ import {
   useState,
 } from "react";
 import MySwal from "../services/swal";
-import api from "@react-bombado-bucha/shared/api";
 
 export interface AuthContextData {
   signed: boolean;
+  user?: IUser;
   login: (email: string, password: string) => Promise<void>;
   register: (
     name: string,
@@ -19,6 +22,7 @@ export interface AuthContextData {
     passwordConfirmation: string
   ) => Promise<void>;
   logout: () => Promise<void>;
+  googleOauth: () => Promise<void>;
 }
 
 export const AuthContext = createContext<AuthContextData>(
@@ -30,11 +34,21 @@ interface AuthProviderProps {
 }
 
 export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
-  const [user, setUser] = useState();
+  const [user, setUser] = useState<IUser>();
   const [token, setToken] = useState<string>();
   const signed = useMemo(() => {
     return !!user;
   }, [user]);
+
+  const handleLogin = useCallback((data: any) => {
+    localStorage.setItem("auth:user", JSON.stringify(data.user));
+    localStorage.setItem("auth:token", data.token.token);
+
+    setUser(data.user);
+    setToken(data.token.token);
+
+    MySwal.fire("Logado", "Seja Bem-vindo(a)", "success");
+  }, []);
 
   const handleRehydrateUserData = () => {
     const user = localStorage.getItem("auth:user");
@@ -55,7 +69,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
 
   useEffect(() => {
     if (token) {
-      api.defaults.headers.common.Authorization = token!;
+      api.defaults.headers.common.Authorization = `Bearer ${token}`;
     }
   }, [token]);
 
@@ -66,13 +80,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
         password,
       });
 
-      localStorage.setItem("auth:user", JSON.stringify(data.user));
-      localStorage.setItem("auth:token", data.token.token);
-
-      setUser(data.user);
-      setToken(data.token.token);
-
-      MySwal.fire("Logado", "Seja Bem-vindo(a)", "success");
+      handleLogin(data);
     } catch (error) {
       MySwal.fire(
         "Erro",
@@ -123,8 +131,23 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
     }
   }, []);
 
+  const googleOauth = useCallback(async () => {
+    try {
+      const url = new URL("http://localhost:3333/google/callback");
+
+      url.search = window.location.search;
+      const { data } = await api.get(url.toString());
+
+      handleLogin(data);
+    } catch (err) {
+      console.log(err);
+    }
+  }, []);
+
   return (
-    <AuthContext.Provider value={{ signed, login, register, logout }}>
+    <AuthContext.Provider
+      value={{ signed, login, register, logout, googleOauth, user }}
+    >
       {children}
     </AuthContext.Provider>
   );

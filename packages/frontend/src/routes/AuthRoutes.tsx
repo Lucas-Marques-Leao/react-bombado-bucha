@@ -1,4 +1,4 @@
-import React from "react";
+import * as React from "react";
 import { Routes, Route, Navigate } from "react-router-dom";
 import AuthGoogle from "../pages/AuthGoogle";
 import Page404 from "../pages/Page404";
@@ -11,7 +11,8 @@ const AuthRoutes: React.FC = () => {
       <Route path="/" element={<Navigate to="/sign-in" />} />
       <Route path="/sign-in" element={<SignIn />} />
       <Route path="/sign-up" element={<SignUp />} />
-      <Route path="auth/google" element={<AuthGoogle />} />
+      <Route path="/home" element={<Navigate to="/sign-in" />} />
+      <Route path="/auth/google" element={<AuthGoogle />} />
       <Route path="*" element={<Page404 />} />
     </Routes>
   );

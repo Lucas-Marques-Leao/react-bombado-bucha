@@ -1,20 +1,26 @@
+import * as React from "react";
 import { DarkThemeToggle, Navbar } from "flowbite-react";
 import { useEffect, useState } from "react";
 import { ITest } from "../../../shared/interfaces/ITest";
 import api from "@react-bombado-bucha/shared/api";
 import { useAuth } from "../contexts/AuthContext";
-import { useNavigate } from "react-router-dom";
 import MySwal from "../services/swal";
+import { useNavigate } from "react-router-dom";
 
 const Home: React.FC = () => {
   const [list, setList] = useState<ITest[]>([]);
   const { logout } = useAuth();
-  let navigate = useNavigate();
+  const navigate = useNavigate();
 
   const handleLogout = async () => {
     try {
-      await api.post("/logout");
+      await logout();
+
       MySwal.fire("Deslogado com Sucesso", "Volte Sempre!", "success");
+
+      setTimeout(() => {
+        window.location.reload();
+      }, 3000);
     } catch (err) {
       MySwal.fire(
         "Deu PIPINHA HAHA",
@@ -22,11 +28,6 @@ const Home: React.FC = () => {
         "error"
       );
     }
-    await logout();
-
-    setTimeout(() => {
-      navigate("/sign-in");
-    }, 3000);
   };
 
   const handleFetch = async () => {
