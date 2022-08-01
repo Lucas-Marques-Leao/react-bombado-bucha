@@ -1,3 +1,4 @@
+import * as React from "react";
 import { AuthProvider } from "./contexts/AuthContext";
 import Routes from "./routes";
 import "./styles/global.css";

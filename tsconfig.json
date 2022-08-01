@@ -1,8 +1,8 @@
 {
-    "compilerOptions": {
-      "jsx": "react-jsx",
-      "noImplicitAny": true,
-      "strictNullChecks": true
-    },
-    "include": ["packages/**/*"]
-  }
+  "compilerOptions": {
+    "jsx": "react",
+    "noImplicitAny": true,
+    "strictNullChecks": true
+  },
+  "include": ["packages/**/*"]
+}
